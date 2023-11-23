@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF=8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Home</title>
+    <link rel = "stylesheet" href="{{ url_for('static', filename='hero.css') }}" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href = "/login">Login</a></li>
+                <li><a href = "/register">Register</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <div class = "container">
+            <img src = "/website/static/goat.jpg" alt ="">
+            <div class="hero-text">
+                <h1>Fridge life fo ever yo</h1>
+                <p>Find all the best recipes using fridge. No more worrying about what you can or can't 
+                    make when you Fridge to help you out!
+                </p>
+                <button>Get Started</button>
+            </div> 
+        </div>
+    </main>
+
+</body>
+</html>
