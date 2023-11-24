@@ -11,18 +11,19 @@
     <header>
         <nav>
             <ul>
-                <li><a href = "/login">Login</a></li>
-                <li><a href = "/register">Register</a></li>
+                <li><a href = "/login"><plain-btn>Login</plain-btn></a></li>
+                <li><a href = "/register"><bordered-btn>Sign up</bordered-btn></a></li>
             </ul>
+            <h1 class ="logo">Fridge</h1>
         </nav>
     </header>
     <main>
         <div class = "container">
-            <img src = "/website/static/goat.jpg" alt ="">
+            <img src = "{{ url_for('static', filename='veggies.png') }}" alt ="your image">
             <div class="hero-text">
                 <h1>Fridge life fo ever yo</h1>
                 <p>Find all the best recipes using fridge. No more worrying about what you can or can't 
-                    make when you Fridge to help you out!
+                    make when you have Fridge to help you out!
                 </p>
                 <button>Get Started</button>
             </div> 
