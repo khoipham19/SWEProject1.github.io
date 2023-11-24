@@ -20,10 +20,7 @@ auth = firebase.auth()
 
 
 
-def signup():
-      if request.method == 'post':
-        email = request.form['email']
-        password = request.form['password']
+def signup(email, password):
         try:
             user = auth.create_user_with_email_and_password(email, password)
             return redirect(url_for('registration_success'))
