@@ -1,4 +1,5 @@
 from flask import Flask, request, jsonify, render_template
+from functions import get_db, add_ingredient_function, remove_ingredient_function
 import sqlite3
 
 app = Flask(__name__)
@@ -25,44 +26,13 @@ def recipes():
 @app.route('/remove', methods = ['POST'])
 def remove_ingredient():
     data = request.json
-    conn = get_db()
-    cursor = conn.cursor()
-
-    cursor.execute("SELECT quantity FROM ingredients WHERE name=?", (data['name'],))
-    result = cursor.fetchone()
-
-    if result:
-        new_quantity = result[0] - int(data['quantity'])
-        if new_quantity <= 0:
-            cursor.execute("DELETE FROM ingredients WHERE name=?", (data['name'],))
-        else:
-            cursor.execute("UPDATE ingredients SET quantity=? WHERE name=?", (new_quantity, data['name'],))
-    else:
-        return jsonify({"message": "Ingredient not found!"})
-    
-    conn.commit()
-    return jsonify({"message": "Ingredient removed!"})
+    return remove_ingredient_function(data)
 
 
 @app.route('/add', methods=['POST'])
 def add_ingredient():
     data = request.json
-    conn = get_db()
-    cursor = conn.cursor()
-
-    cursor.execute("SELECT quantity FROM ingredients WHERE name=?", (data['name'],))
-    result = cursor.fetchone()
-
-    if result:
-        new_quantity = result[0] + int(data['quantity'])
-        cursor.execute("UPDATE ingredients SET quantity=? WHERE name=?", (new_quantity, data['name']))
-
-    
-    else:
-        cursor.execute("INSERT INTO ingredients (name, quantity) VALUES (?, ?)", (data['name'], data['quantity'],))
-
-    conn.commit()
-    return jsonify({"message": "Ingredient added!"})
+    return add_ingredient_function(data)
 
 @app.route('/view', methods=['GET'])
 def view_fridge():
