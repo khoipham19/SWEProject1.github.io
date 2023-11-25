@@ -41,6 +41,30 @@ def add_ingredient():
 def view_fridge():
     return view_fridge_function()
 
+# View avaiable recipes based on available ingredients
+@app.route('/view_recipes', methods=['GET'])
+def view_recipes():
+    # Recipes with their required ingredients
+    recipes_dict = {
+        "English Breakfast": ["Egg", "Bacon"],
+        # "Recipe2": ["ingredient3", "ingredient4"],
+        # Add more recipes as needed
+    }
+
+    # Fetch ingredients from the database
+    conn = get_db()
+    cursor = conn.cursor()
+    cursor.execute("SELECT name FROM ingredients")
+    available_items = [item[0] for item in cursor.fetchall()]
+
+    # Find which recipes can be made with available ingredients
+    possible_recipes = []
+    for recipe, required_ingredients in recipes_dict.items():
+        if all(ingredient in available_items for ingredient in required_ingredients):
+            possible_recipes.append(recipe)
+
+    return jsonify(possible_recipes)
+
 if __name__ == "__main__":
     conn = sqlite3.connect(DATABASE)
     cursor = conn.cursor()

@@ -1,6 +1,20 @@
 body {
     background-color: #83ddfe;
 }
+body::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('fridge.png');
+    background-repeat: no-repeat;
+    background-size: 1200px auto;
+    background-position: 50% 10%;
+    opacity: 0.1; 
+    z-index: -1; 
+}
 
 h1 {
     font-family: 'Arial', sans-serif;
@@ -8,7 +22,7 @@ h1 {
     margin-bottom: 20px;
     border-radius: 5px;
     width: 60%;
-    border: 2px solid darkgrey;
+    border: 2px solid #002c59;
     padding: 10px;
     text-align: center;
     background-color: #4a5e81;
@@ -27,7 +41,7 @@ h2 {
     padding: px;
     text-align: center;
     background-color: #4a5e81;
-    color: #FCF6F5;
+    color: #ffffff;
     box-shadow: 2px 2px 5px grey;
 }
 h3 {
@@ -49,7 +63,7 @@ h4{
     margin-bottom: 20px;
     border-radius: 5px;
     width: 60%;
-    border: 2px solid darkgrey;
+    border: 2px solid #002c59;
     padding: 10px;
     text-align: center;
     background-color: #4a5e81;
@@ -84,11 +98,11 @@ h4{
     margin: auto;
     margin-bottom: 20px;
     border-radius: 10px;
-    border: 2px solid lightgrey;
+    border: 2px solid #002c59;
     padding: 15px;
     background-color: #9ce7ff;
     color: black;
-    width: 50%;
+    width: 30%;
     box-shadow: 2px 2px 5px grey;
 }
 
@@ -96,6 +110,7 @@ h4{
     list-style-type: none;
     padding: 0;
     margin: 0;
+    width: 20%;
 }
 
 .fridge-list-item {
