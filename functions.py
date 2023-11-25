@@ -44,3 +44,10 @@ def remove_ingredient_function(data):
     
     conn.commit()
     return jsonify({"message": "Ingredient removed!"})
+
+def view_fridge_function():
+    conn = get_db()
+    cursor = conn.cursor()
+    cursor.execute("SELECT * FROM ingredients")
+    items = cursor.fetchall()
+    return jsonify(items)
