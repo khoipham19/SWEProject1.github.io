@@ -88,3 +88,4 @@ if __name__ == "__main__":
     cursor.execute("CREATE TABLE IF NOT EXISTS ingredients (name TEXT, quantity INTEGER)")
     conn.commit()
     app.run(debug=True)
+    return jsonify(possible_recipes)
