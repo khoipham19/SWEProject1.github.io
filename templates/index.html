@@ -4,87 +4,99 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Virtual Fridge</title>
-    <link rel="stylesheet" href="styles/index.css">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/index.css') }}">
 </head>
 <body>
-    
+<div class="flex-container">
+    <div class="content-container">
+        <h1>Virtual Fridge</h1>
 
-<h1>Virtual Fridge</h1>
+        <form id="addForm" class ="form">
+            <h2>Add Ingredient:</h2>
+            <h4>Name: <input type="text" id="addName"></h4>
+            <h4>Quantity: <input type="number" id="addQuantity"></h4>
+            <button class="button" type="submit">Add</button>
+        </form>
 
 
-<form id="addForm" class ="form">
-    <h3>Add Ingredient:</h3>
-    Name: <input type="text" id="addName">
-    Quantity: <input type="number" id="addQuantity">
-    <button class="button" type="submit">Add</button>
-</form>
+        <form id="removeForm" class ="form">
+            <h2>Remove Ingredient:</h2>
+            <h4>Name: <input type="text" id="removeName"></h4>
+            <h4>Quantity: <input type="text" id="removeQuantity"></h4>
+            <button class = "button" type="submit">Remove</button>
+        </form>
 
+        <h3>Fridge Contents:</h3>
+        <ul id="fridgeContents"></ul>
 
-<form id="removeForm" class ="form">
-    <h3>Remove Ingredient:</h3>
-    Name: <input type="text" id="removeName">
-    Quantity: <input type="text" id="removeQuantity">
-    <button class = "button" type="submit">Remove</button>
-</form>
+        <div class="footer">
+            <a href="/login" class="button" role="button">Logout</a>
+            <a href="/recipes" class="button" role="button">Recipes</a>
+        </div>
+        
 
-<h3>Fridge Contents:</h3>
-<ul id="fridgeContents"></ul>
+        <script>
+            document.getElementById('addForm').addEventListener('submit', function(event) {
+                event.preventDefault();
+                const name = document.getElementById('addName').value;
+                const quantity = document.getElementById('addQuantity').value;
 
-<div class="footer">
-    <a href="login.html"><button class="button" role="button">Logout</button></a>
+                fetch('/add', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        name: name,
+                        quantity: quantity
+                    })
+                }).then(function() {
+                    updateFridge();
+                });
+            });
+
+            document.getElementById('removeForm').addEventListener('submit', function(event) {
+                event.preventDefault();
+                const name = document.getElementById('removeName').value;
+                const quantity = document.getElementById('removeQuantity').value;
+
+                fetch('/remove', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        name: name,
+                        quantity: quantity
+                    })
+                }).then(function() {
+                    updateFridge();
+                });
+            });
+
+            function updateFridge() {
+            fetch('/view').then(response => response.json()).then(data => {
+                const fridgeList = document.getElementById('fridgeContents');
+                fridgeList.innerHTML = "";
+                fridgeList.className = 'fridge-list'; // Apply the class to the list
+
+                data.forEach(item => {
+                    const listItem = document.createElement('li');
+                    listItem.className = 'fridge-list-item'; // Apply the class to each list item
+                    listItem.innerHTML = `${item[0]}: ${item[1]}`;
+                    fridgeList.appendChild(listItem);
+                });
+            });
+        }
+
+            updateFridge();
+        </script>
+    </div>
+    <div class="image-container" style="background-image: url('static/images/fridge.png');">
+        <img src="static/images/fridge.png" alt="fridge">
+    </div>
 </div>
 
-<script>
-    document.getElementById('addForm').addEventListener('submit', function(event) {
-        event.preventDefault();
-        const name = document.getElementById('addName').value;
-        const quantity = document.getElementById('addQuantity').value;
-
-        fetch('/add', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                name: name,
-                quantity: quantity
-            })
-        }).then(function() {
-            updateFridge();
-        });
-    });
-
-    document.getElementById('removeForm').addEventListener('submit', function(event) {
-        event.preventDefault();
-        const name = document.getElementById('removeName').value;
-        const quantity = document.getElementById('removeQuantity').value;
-
-        fetch('/remove', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                name: name,
-                quantity: quantity
-            })
-        }).then(function() {
-            updateFridge();
-        });
-    });
-
-    function updateFridge() {
-        fetch('/view').then(response => response.json()).then(data => {
-            const fridgeList = document.getElementById('fridgeContents');
-            fridgeList.innerHTML = "";
-            data.forEach(item => {
-                fridgeList.innerHTML += `<li>${item[0]}: ${item[1]}</li>`;
-            });
-        });
-    }
-
-    updateFridge();
-</script>
 
 </body>
 </html>
