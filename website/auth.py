@@ -5,7 +5,12 @@ auth = Blueprint('auth', __name__)
 
 @auth.route('/login', methods=['GET', 'POST'])
 def login():
-    data = request.form
+    if request.method == 'POST':
+        email = request.form.get('email')
+        password = request.form.get('password')
+        login(email, password)
+        return render_template("account_made.html")
+
     return render_template("login.html", boolean =True)
 
 @auth.route('/register', methods=['GET', 'POST'])
@@ -20,6 +25,11 @@ def register():
             flash('Password must be at least 7 characters', category = 'error')
         else:
             signup(email, password)
+            return render_template("account_made.html")
             
 
     return render_template("register.html")
+
+@auth.route('/account_made')
+def account_made():
+    return render_template("account_made.html")

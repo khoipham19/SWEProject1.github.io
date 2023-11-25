@@ -23,15 +23,11 @@ auth = firebase.auth()
 def signup(email, password):
         try:
             user = auth.create_user_with_email_and_password(email, password)
-            return redirect(url_for('registration_success'))
         except:
             return "Registration failed"
 
 
-def login():
-   if request.method == 'post':
-      email = request.form['email']
-      password = request.form['password']
+def login(email, password):
       try:
          login = auth.sign_in_with_email_and_password(email, password)
          print("Successfully logged in!")
