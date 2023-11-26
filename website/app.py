@@ -86,7 +86,7 @@ def add_recipe():
     conn.commit()
     return jsonify({"message": "Recipe added!"})
 
-# View avaiable recipes based on available ingredients
+# View avaiable recipes based on available ingredient
 @fridge.route('/view_recipes', methods=['GET'])
 def view_recipes():
     # Recipes with their required ingredients
