@@ -13,7 +13,7 @@ This Flask application serves as a digital inventory for tracking ingredients in
 ## How to Run
 1. Ensure you have Python and Flask installed on your machine.
 2. Navigate to the root directory of the project in your terminal or command prompt.
-3. Run the application using:
+3. Run the application using: main.py (so python main.py) 
 4. Access the application in your web browser at `http://127.0.0.1:5000/`.
 
 ## Technologies Used
