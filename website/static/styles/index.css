@@ -1,19 +1,5 @@
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap");
-
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: "Poppins", sans-serif;
-
-}
-
 body {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    
+    background-color: #83ddfe;
 }
 body::before {
     content: '';
@@ -22,12 +8,11 @@ body::before {
     left: 0;
     width: 100%;
     height: 100%;
-    background-image: url('ingredients-cooking-pasta-wooden-background.jpg');
-    background-attachment: fixed;
+    background-image: url('fridge.png');
     background-repeat: no-repeat;
-    background-size: cover;
+    background-size: 1200px auto;
     background-position: 50% 10%;
-    opacity: 0.7; 
+    opacity: 0.1; 
     z-index: -1; 
 }
 
@@ -44,53 +29,64 @@ body::before {
 
 .wrapper h1 {
     font-size: 50px;
+=======
+h1 {
+    font-family: 'Arial', sans-serif;
+    margin: auto;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    width: 60%;
+    border: 2px solid #002c59;
+    padding: 10px;
     text-align: center;
-    margin-bottom: 30px;
+    background-color: #4a5e81;
+    color: #FCF6F5;
+    box-shadow: 2px 2px 5px grey;
 }
 
-.wrapper h2 {
-    font-size: 20px;
-    text-align: left;
-    margin: 10px;
-    color: #e2e273; 
+h2 {
+    font-size: small;
+    font-family: 'Arial', sans-serif;
+    margin: auto;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    width: 60%;
+    border: 2px solid darkgrey;
+    padding: px;
+    text-align: center;
+    background-color: #4a5e81;
+    color: #ffffff;
+    box-shadow: 2px 2px 5px grey;
+}
+h3 {
+    font-family: 'Arial', sans-serif;
+    margin: auto;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    width: 30%;
+    border: 2px solid darkgrey;
+    padding: 10px;
+    text-align: center;
+    background-color: #4a5e81;
+    color: #FCF6F5;
+    box-shadow: 2px 2px 5px grey;
 }
 
-.wrapper h3 {
-    font-size: 20px;
-    text-align: left;
-    margin: 25px 0px 10px;
-    color: #e2e273; 
+h4{
+    font-family: 'Arial', sans-serif;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    width: 60%;
+    border: 2px solid #002c59;
+    padding: 10px;
+    text-align: center;
+    background-color: #4a5e81;
+    color: #FCF6F5;
+    box-shadow: 2px 2px 5px grey;
 }
-
-.wrapper .input-box {
-    position: relative;
-    width: 100%;
-    height: 30px;
-    margin: 30px 0;
-    margin-top: 10px
-}
-
-.input-box input{
-    width: 100%;
-    height: 100%;
-    background: transparent;
-    border: none;
-    border: 2px solid rgba(255, 255,255,.2);
-    border-radius: 45px;
-    font-size: 14px;
-    padding: 20px 45px 20px 20px;
-    color: white;
-    outline: none;
-}
-
-.input-box input::placeholder {
-    color: white;
-    font-size: 14px;
-    padding: 20px 45px 20px 2px;
-}
-
 
 .button {
+
     width: 100%;
     border-radius: 45px;
     height: 30px;
@@ -106,59 +102,60 @@ body::before {
 .button:hover {
     background: #333;
     color: #fff;
+=======
+    border-radius: 15px;
+    padding: 1px 20px;
+    background-color: #002c59;
+    border: 2px solid #002c59;
+    color: white;
+    box-shadow: 1px 1px 3px grey;
+    margin-top: 10px;
+}
+
+.button:hover {
+    opacity: 0.8;
+
 }
 
 .footer {
     position: fixed;
-    bottom: 15px;
-    left: 1%;
+    bottom: 10px;
+    left: 5%;
+    transform: translateX(-50%);
     color: grey;
     font-size: 14px;
 }
 
-.footer .button{
-    width: 100%;
-    border-radius: 45px;
-    height: 30px;
-    padding: 10px 50px;
-    background-color: #ffffff;
-    border: none;
-    color: rgb(0, 0, 0);
-    box-shadow: 1px 1px 3px grey;
-    text-align: center;
-    margin-right: 10px;
+.form {
+    margin: auto;
+    margin-bottom: 20px;
+    border-radius: 10px;
+    border: 2px solid #002c59;
+    padding: 15px;
+    background-color: #9ce7ff;
+    color: black;
+    width: 30%;
+    box-shadow: 2px 2px 5px grey;
 }
-
-.footer .button:hover {
-    background: #333;
-    color: #fff;
-}
-
 
 .fridge-list {
     list-style-type: none;
     padding: 0;
     margin: 0;
-    column-count: 4;
-    column-gap: 20px; 
-    width: 100%;
-    max-height: 100vh; 
-    overflow-y: auto; 
+    width: 20%;
 }
 
 .fridge-list-item {
-    background-color: rgb(255, 255, 255);
-    background: transparent;
-    color: rgb(255, 255, 255);
+    background-color: rgb(0, 5, 73);
+    color: white;
     width: 100%;
+    margin: auto;
     margin-bottom: 5px;
     padding: 10px;
     border-radius: 5px;
-    break-inside: avoid;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
-
-  
 
 
 
