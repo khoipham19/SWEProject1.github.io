@@ -40,3 +40,10 @@ def check_user_validity(email, password):
         return True
     except:
         return False
+    
+def check_user_exists(email, password):
+    try:
+        user = auth.create_user_with_email_and_password(email, password)
+        return True
+    except:
+        return False

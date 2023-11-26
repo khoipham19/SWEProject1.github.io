@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request, flash, redirect, url_for
-from .login import login, signup, check_user_validity
+from .login import login, signup, check_user_validity, check_user_exists
 from .app import fridge, index
 
 auth = Blueprint('auth', __name__)
@@ -27,10 +27,9 @@ def register():
         email = request.form.get('email')
         password = request.form.get('password')
 
-        if len(email) < 4:
-            flash('Email invalid', category='error')
-        elif len(password) < 7:
-            flash('Password must be at least 7 characters', category = 'error')
+        is_valid = check_user_exists(email, password)
+        if is_valid == False:
+            flash('User already exists', 'error')
         else:
             signup(email, password)
             return redirect(url_for('auth.account_made'))
