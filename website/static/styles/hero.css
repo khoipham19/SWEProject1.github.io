@@ -8,6 +8,24 @@
     font-family: "Poppins", sans-serif;
 }
 
+.product-title {
+    margin: 0;
+    font-size: 24px; /* Adjust font size as needed */
+    color: #333; /* Adjust font color as needed */
+    text-align: right; /* Align text to the right */
+    .logo img {
+    max-width: 50px; /* Adjust logo width as needed */
+    flex-grow: 1; /* Allow the title to take up remaining space */
+}
+
+}
+
+.logo-icon{
+    max-width: 200px; /* Adjust logo width as needed */
+    margin-right: 20px;
+    margin-left: -20px;
+}
+
 .logo{
     order:1;
     font-size: 2rem;
@@ -37,7 +55,7 @@ nav ul a{
 
 bordered-btn {
     background-color: transparent;
-    border: 1px solid rgb(91, 40, 167);
+    border: 1px solid rgb(255, 145, 0);
     border-radius: 6px;
     padding: 4px 6px 4px;
   }
@@ -109,4 +127,7 @@ button:hover{
     }
 }
 
+.main-image{
+    border-radius: 10px;
+}
 
