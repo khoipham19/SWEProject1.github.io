@@ -1,5 +1,6 @@
 from flask import Blueprint, render_template, request, flash, redirect, url_for
 from .login import login, signup
+from .app import fridge, index
 
 auth = Blueprint('auth', __name__)
 
@@ -10,7 +11,7 @@ def login_route():
         email = request.form.get('email')
         password = request.form.get('password')
         login(email, password)
-        return redirect(url_for('auth.account_made'))
+        return redirect(url_for('fridge.index'))
 
     return render_template("login.html", boolean =True)
 

@@ -13,11 +13,6 @@ def create_app():
         cursor = conn.cursor()
         cursor.execute("CREATE TABLE IF NOT EXISTS ingredients (name TEXT, quantity INTEGER)")
         cursor.execute("CREATE TABLE IF NOT EXISTS recipes (name TEXT, ingredients TEXT)")
-
-        # cursor.execute("SELECT * FROM recipes")
-        # rows = cursor.fetchall()
-        # for row in rows:
-        #     print(row)
         conn.commit()
         conn.close()
     
