@@ -49,7 +49,7 @@
         <script>
             document.getElementById('addForm').addEventListener('submit', function(event) {
                 event.preventDefault();
-                const name = document.getElementById('addName').value;
+                const name = document.getElementById('addName').value.toLowerCase();
                 const quantity = document.getElementById('addQuantity').value;
 
                 fetch('/add', {
@@ -68,7 +68,7 @@
 
             document.getElementById('removeForm').addEventListener('submit', function(event) {
                 event.preventDefault();
-                const name = document.getElementById('removeName').value;
+                const name = document.getElementById('removeName').value.toLowerCase();
                 const quantity = document.getElementById('removeQuantity').value;
 
                 fetch('/remove', {

@@ -14,7 +14,53 @@
     <h2>Recipes</h2>
     <ul id="recipeList"></ul> <!-- Container for the recipe list -->
 
+    <!-- A form to take in a recipe and list of ingredients in a list separated by a comma -->
+    <div class="wrapper">
+        <form id="recipeForm" class="form">
+            <h2>Add Recipe:</h2>
+            <div class="input-box">
+                <input type="text" id="addName"
+                placeholder="Recipe" required>
+            </div>
+            <div class="input-box">
+                <input type="text" id="addIngredients"
+                placeholder="Ingredients" required>
+            </div>
+            <button class="button" type="submit">Add</button>
+        </form>
+    </div>
+
     <script>
+        document.getElementById('recipeForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const name = document.getElementById('addName').value;
+            const ingredients = document.getElementById('addIngredients').value;
+
+            fetch('/add_recipe', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    name: name,
+                    ingredients: ingredients,
+                }),
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log(data);
+                updateRecipes();
+            })
+            .catch(error => {
+                console.error('There has been a problem with your fetch operation:', error);
+            });
+        });
+
         function updateFridge() {
             fetch('/view')
             .then(response => {
@@ -45,33 +91,21 @@
         });
 
         function updateRecipes() {
-            fetch('/view_recipes')
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.json();
-            })
-            .then(recipes => {
+            fetch('/view_recipes').then(response => response.json()).then(recipes => {
                 const recipeList = document.getElementById('recipeList');
                 recipeList.innerHTML = "";
-                recipeList.className = 'fridge-list';
 
                 recipes.forEach(recipe => {
                     const listItem = document.createElement('li');
-                    listItem.className = 'fridge-list-item';
                     listItem.textContent = recipe;
                     recipeList.appendChild(listItem);
-                });
-            })
-            .catch(error => {
-                console.error('There has been a problem with your fetch operation:', error);
-            });
-        }
+        });
+    });
+}
+
 
         document.addEventListener('DOMContentLoaded', (event) => {
-        updateFridge();
-        updateRecipes(); 
+            updateRecipes(); 
     });
     </script>
 
