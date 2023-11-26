@@ -67,21 +67,7 @@ def add_ingredient():
 # View the fridge in list
 @fridge.route('/view', methods=['GET'])
 def view_fridge():
-    conn = get_db()
-    cursor = conn.cursor()
-    cursor.execute("SELECT * FROM ingredients")
-    items = cursor.fetchall()
-    return jsonify(items)
-
-# Add recipe and ingredients to the database
-@fridge.route('/add_recipe', methods=['POST'])
-def add_recipe():
-    data = request.json
-    conn = get_db()
-    cursor = conn.cursor()
-    cursor.execute("INSERT INTO recipes (name, ingredients) VALUES (?, ?)", (data['name'].lower(), data['ingredients'].lower(),))
-    conn.commit()
-    return jsonify({"message": "Recipe added!"})
+    return view_fridge_function()
 
 # View avaiable recipes based on available ingredients
 @fridge.route('/view_recipes', methods=['GET'])
@@ -112,4 +98,3 @@ if __name__ == "__main__":
     cursor.execute("CREATE TABLE IF NOT EXISTS ingredients (name TEXT, quantity INTEGER)")
     conn.commit()
     app.run(debug=True)
-    return jsonify(possible_recipes)
