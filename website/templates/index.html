@@ -7,38 +7,22 @@
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/index.css') }}">
 </head>
 <body>
-    <div class="footer">
-        <a style="text-decoration: none;" href="/login" class="button" role="button">Logout</a>
-        <a style="text-decoration: none;" href="/recipes" class="button" role="button">Recipes</a>
-    </div>
+<div class="flex-container">
+    <div class="content-container">
+        <h1>Virtual Fridge</h1>
 
-    <div class="wrapper">
-        <h1>FRIDGE</h1>
         <form id="addForm" class ="form">
             <h2>Add Ingredient:</h2>
-            <div class="input-box">
-                <input type="text" id="addName"
-                placeholder="Ingredient" required>
-            </div>
-            <div class="input-box">
-                <input type="number" id="addQuantity"
-                placeholder="Quantity" required>
-            </div>
+            <h4>Name: <input type="text" id="addName"></h4>
+            <h4>Quantity: <input type="number" id="addQuantity"></h4>
             <button class="button" type="submit">Add</button>
         </form>
 
 
         <form id="removeForm" class ="form">
             <h2>Remove Ingredient:</h2>
-            <div class="input-box">
-                <input type="text" id="removeName"
-                placeholder="Ingredient" required>
-            </div>
-            <div class="input-box">
-                <input type="text" id="removeQuantity"
-                placeholder="Quantity" required>
-            </div>
-            
+            <h4>Name: <input type="text" id="removeName"></h4>
+            <h4>Quantity: <input type="text" id="removeQuantity"></h4>
             <button class = "button" type="submit">Remove</button>
         </form>
 
@@ -50,15 +34,11 @@
             <a href="/recipes" class="button" role="button">Recipes</a>
         </div>
         
+
         <script>
-            // Capitalize the first letter of each word in a string
-            function capitalizeFirstLetter(string) {
-                 return string.charAt(0).toUpperCase() + string.slice(1);
-            }
-            
             document.getElementById('addForm').addEventListener('submit', function(event) {
                 event.preventDefault();
-                const name = document.getElementById('addName').value.toLowerCase();
+                const name = document.getElementById('addName').value;
                 const quantity = document.getElementById('addQuantity').value;
 
                 fetch('/add', {
@@ -77,7 +57,7 @@
 
             document.getElementById('removeForm').addEventListener('submit', function(event) {
                 event.preventDefault();
-                const name = document.getElementById('removeName').value.toLowerCase();
+                const name = document.getElementById('removeName').value;
                 const quantity = document.getElementById('removeQuantity').value;
 
                 fetch('/remove', {
@@ -102,9 +82,8 @@
 
                 data.forEach(item => {
                     const listItem = document.createElement('li');
-                    const newItem = item[0].split(" ").map(capitalizeFirstLetter);
                     listItem.className = 'fridge-list-item'; // Apply the class to each list item
-                    listItem.innerHTML = `${newItem[0]} <span style="color: lightblue;">${item[1]}`;
+                    listItem.innerHTML = `${item[0]}: ${item[1]}`;
                     fridgeList.appendChild(listItem);
                 });
             });
@@ -113,6 +92,9 @@
             updateFridge();
         </script>
     </div>
+    <!-- <div class="image-container" style="background-image: url('static/images/fridge.png');">
+        <img src="static/images/fridge.png" alt="fridge">
+    </div> -->
 </div>
 
 
