@@ -19,15 +19,9 @@ This Flask application serves as a digital inventory for tracking ingredients in
 ## Technologies Used
 - Flask: A micro web framework written in Python.
 - SQLite: A C-language library that implements a small, fast, self-contained, high-reliability, full-featured, SQL database engine.
-
-## Directory Structure
-- `app.py`: Main application file containing Flask routes.
-- `functions.py`: Contains the core logic for database operations and ingredient management.
-- `templates/`: Directory containing HTML templates for the application.
-- `static/`: Directory containing static files like CSS and JavaScript.
-- `fridge.db`: SQLite database file for storing ingredient data.
+- Firebase: An authentication service
 
 ## Notes
 - The application is currently in a development stage with a focus on backend functionality. Frontend design and user authentication are areas for future development.
-- The SQLite database (`fridge.db`) is used for local storage and testing purposes.
+- The SQLite database (`fridge.db`) is used for local storage and testing purposes. Simple data so using a light database like SQLite was the go-to choice.
 
