@@ -74,9 +74,6 @@ def view_fridge():
     items = cursor.fetchall()
     return jsonify(items)
 
-
-
-# Add recipe and ingredients to the database
 @fridge.route('/add_recipe', methods=['POST'])
 def add_recipe():
     data = request.json
@@ -85,21 +82,14 @@ def add_recipe():
     cursor.execute("INSERT INTO recipes (name, ingredients) VALUES (?, ?)", (data['name'].lower(), data['ingredients'].lower(),))
     conn.commit()
     return jsonify({"message": "Recipe added!"})
+    
 
 # View avaiable recipes based on available ingredients
 @fridge.route('/view_recipes', methods=['GET'])
 def view_recipes():
-    # Recipes with their required ingredients
-    recipes_dict = {
-        "English Breakfast": ["Egg", "Bacon"],
-        # "Recipe2": ["ingredient3", "ingredient4"],
-        # Add more recipes as needed
-    }
-
-    # Fetch ingredients from the database
+    # fetch ingredients and their tuple of ingredients from the database
     conn = get_db()
     cursor = conn.cursor()
-
 
     # fetch all ingredients from the database
     cursor.execute("SELECT * FROM ingredients")
@@ -110,15 +100,15 @@ def view_recipes():
     cursor.execute("SELECT * FROM recipes")
     recipes = cursor.fetchall()
     print(recipes)
-    
-    cursor.execute("SELECT name FROM ingredients")
-    available_items = [item[0] for item in cursor.fetchall()]
-
 
     possible_recipes = []
-    for recipe, required_ingredients in recipes_dict.items():
-        if all(ingredient in available_items for ingredient in required_ingredients):
-            possible_recipes.append(recipe)
+
+    for recipe in recipes:
+        recipe_name, recipe_ingredients = recipe
+        ingredients_list = set(ingredient.strip() for ingredient in recipe_ingredients.split(','))
+
+        if ingredients_list.issubset(avaiable_ingredients):
+            possible_recipes.append(recipe_name.capitalize())
 
     return jsonify(possible_recipes)
 
