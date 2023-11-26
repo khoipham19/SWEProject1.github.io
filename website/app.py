@@ -96,7 +96,7 @@ def view_recipes():
     avaiable_ingredients = {item[0] for item in cursor.fetchall()}
     print(avaiable_ingredients)
 
-    # fetch all recipes from the database
+    # fetch all recipes from the databases
     cursor.execute("SELECT * FROM recipes")
     recipes = cursor.fetchall()
     print(recipes)
