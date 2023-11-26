@@ -73,6 +73,16 @@ def view_fridge():
     items = cursor.fetchall()
     return jsonify(items)
 
+# Add recipe and ingredients to the database
+@fridge.route('/add_recipe', methods=['POST'])
+def add_recipe():
+    data = request.json
+    conn = get_db()
+    cursor = conn.cursor()
+    cursor.execute("INSERT INTO recipes (name, ingredients) VALUES (?, ?)", (data['name'].lower(), data['ingredients'].lower(),))
+    conn.commit()
+    return jsonify({"message": "Recipe added!"})
+
 # View avaiable recipes based on available ingredients
 @fridge.route('/view_recipes', methods=['GET'])
 def view_recipes():
