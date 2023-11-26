@@ -7,22 +7,33 @@
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/index.css') }}">
 </head>
 <body>
-<div class="flex-container">
-    <div class="content-container">
+    <div class="wrapper">
         <h1>Virtual Fridge</h1>
-
         <form id="addForm" class ="form">
             <h2>Add Ingredient:</h2>
-            <h4>Name: <input type="text" id="addName"></h4>
-            <h4>Quantity: <input type="number" id="addQuantity"></h4>
+            <div class="input-box">
+                <input type="text" id="addName"
+                placeholder="Ingredient" required>
+            </div>
+            <div class="input-box">
+                <input type="number" id="addQuantity"
+                placeholder="Quantity" required>
+            </div>
             <button class="button" type="submit">Add</button>
         </form>
 
 
         <form id="removeForm" class ="form">
             <h2>Remove Ingredient:</h2>
-            <h4>Name: <input type="text" id="removeName"></h4>
-            <h4>Quantity: <input type="text" id="removeQuantity"></h4>
+            <div class="input-box">
+                <input type="text" id="removeName"
+                placeholder="Ingredient" required>
+            </div>
+            <div class="input-box">
+                <input type="text" id="removeQuantity"
+                placeholder="Quantity" required>
+            </div>
+            
             <button class = "button" type="submit">Remove</button>
         </form>
 
@@ -92,9 +103,6 @@
             updateFridge();
         </script>
     </div>
-    <!-- <div class="image-container" style="background-image: url('static/images/fridge.png');">
-        <img src="static/images/fridge.png" alt="fridge">
-    </div> -->
 </div>
 
 
