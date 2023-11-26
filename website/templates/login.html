@@ -16,6 +16,21 @@
     <a href="/">
             <img src = "{{ url_for('static', filename='images/fridgeblack.png') }}" alt ="your image" class = "logo">
      </a>
+
+     {% with messages = get_flashed_messages(with_categories=true) %}
+     {% if messages %}
+         {% for category, message in messages %}
+             {% if category == 'error' %}
+                <div class ="error-box">
+                <span class="close-btn" onclick="this.parentElement.style.display='none';">&times;</span>
+                 <!-- Code for handling error message display -->
+                 {{ message }}
+                </div>
+             {% endif %}
+         {% endfor %}
+     {% endif %}
+ {% endwith %}
+
     <div class="wrapper">
         
         <form method = "POST">

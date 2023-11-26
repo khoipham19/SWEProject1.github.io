@@ -143,9 +143,28 @@ body{
 
 }
 
+.error-box {
+  background-color: #ffe6e6; /* Light red background */
+  border: 1px solid #ff6666; /* Red border */
+  padding: 10px; /* Padding around the content */
+  padding-left: 90px;
+  padding-right: 90px;
+  margin-bottom: 10px; /* Optional margin bottom for spacing */
+  border-radius: 5px; /* Rounded corners */
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3); /* Shadow effect */
+}
 
 
+close-btn {
+  position: absolute; /* Absolute positioning */
+  top: 5px; /* Adjust the top position as needed */
+  right: 5px; /* Position to the right */
+  cursor: pointer;
+  font-size: 20px;
+  font-weight: bold;
+  color: #888;
+}
 
-
-
-
+close-btn:hover {
+  color: #000;
+}

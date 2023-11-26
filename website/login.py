@@ -33,3 +33,10 @@ def login(email, password):
          
       except:
          return "Login failed"
+      
+def check_user_validity(email, password):
+    try:
+        user = auth.sign_in_with_email_and_password(email, password)
+        return True
+    except:
+        return False

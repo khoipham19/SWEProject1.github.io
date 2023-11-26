@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request, flash, redirect, url_for
-from .login import login, signup
+from .login import login, signup, check_user_validity
 from .app import fridge, index
 
 auth = Blueprint('auth', __name__)
@@ -10,10 +10,16 @@ def login_route():
     if request.method == 'POST':
         email = request.form.get('email')
         password = request.form.get('password')
-        login(email, password)
-        return redirect(url_for('fridge.index'))
+        is_valid = check_user_validity(email, password)
+        print(is_valid)
+        if is_valid == False:
+             print(password)
+             flash('Incorrect email or password', 'error')
+        else:
+            login(email, password)
+            return redirect(url_for('fridge.index'))
 
-    return render_template("login.html", boolean =True)
+    return render_template("login.html", bool=True)
 
 @auth.route('/register', methods=['GET', 'POST'])
 def register():
