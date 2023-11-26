@@ -30,6 +30,6 @@ def signup(email, password):
 def login(email, password):
       try:
          login = auth.sign_in_with_email_and_password(email, password)
-         print("Successfully logged in!")
+         
       except:
-         print("Invalid email or password")
+         return "Login failed"

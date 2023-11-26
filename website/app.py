@@ -9,10 +9,6 @@ def get_db():
     conn = sqlite3.connect(DATABASE)
     return conn
 
-# Login page
-@app.route('/')
-def login():
-    return render_template('login.html')
 
 # Main page; function page; fridge page
 @app.route('/fridge')
