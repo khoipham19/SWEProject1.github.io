@@ -58,6 +58,7 @@ def add_ingredient():
         new_quantity = result[0] + int(data['quantity'])
         cursor.execute("UPDATE ingredients SET quantity=? WHERE name=?", (new_quantity, data['name']))
 
+    
     else:
         cursor.execute("INSERT INTO ingredients (name, quantity) VALUES (?, ?)", (data['name'], data['quantity'],))
 
@@ -72,6 +73,8 @@ def view_fridge():
     cursor.execute("SELECT * FROM ingredients")
     items = cursor.fetchall()
     return jsonify(items)
+
+
 
 # Add recipe and ingredients to the database
 @fridge.route('/add_recipe', methods=['POST'])
@@ -96,13 +99,26 @@ def view_recipes():
     # Fetch ingredients from the database
     conn = get_db()
     cursor = conn.cursor()
+
+
+    # fetch all ingredients from the database
+    cursor.execute("SELECT * FROM ingredients")
+    avaiable_ingredients = {item[0] for item in cursor.fetchall()}
+    print(avaiable_ingredients)
+
+    # fetch all recipes from the database
+    cursor.execute("SELECT * FROM recipes")
+    recipes = cursor.fetchall()
+    print(recipes)
+    
     cursor.execute("SELECT name FROM ingredients")
     available_items = [item[0] for item in cursor.fetchall()]
 
-    # Find which recipes can be made with available ingredients
+
     possible_recipes = []
     for recipe, required_ingredients in recipes_dict.items():
         if all(ingredient in available_items for ingredient in required_ingredients):
             possible_recipes.append(recipe)
 
     return jsonify(possible_recipes)
+
