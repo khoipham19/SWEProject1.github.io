@@ -126,6 +126,11 @@ body{
   font-weight: 600;
 }
 
+.btn:hover {
+  background: #333;
+  color: #fff;
+}
+
 .wrapper .register-link {
   font-size: 14.5px;
   text-align: center;
@@ -141,6 +146,33 @@ body{
 .register-link p a:hover {
   text-decoration: underline;
 
+}
+
+.footer {
+  position: fixed;
+  bottom: 15px;
+  left: 1%;
+  color: grey;
+  font-size: 14px;
+}
+
+.footer .button {
+  width: 100%;
+  left: 3%;
+  border-radius: 40px;
+  height: 70px;
+  padding: 10px 50px;
+  background-color: #ffffff;
+  border: none;
+  color: rgb(0, 0, 0);
+  box-shadow: 1px 1px 3px grey;
+  text-align: center;
+  margin: auto;
+}
+
+.button:hover {
+  background: #333;
+  color: #fff;
 }
 
 
