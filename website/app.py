@@ -48,40 +48,12 @@ def remove_ingredient():
 @fridge.route('/add', methods=['POST'])
 def add_ingredient():
     data = request.json
-    conn = get_db()
-    cursor = conn.cursor()
-
-    cursor.execute("SELECT quantity FROM ingredients WHERE name=?", (data['name'],))
-    result = cursor.fetchone()
-
-    if result:
-        new_quantity = result[0] + int(data['quantity'])
-        cursor.execute("UPDATE ingredients SET quantity=? WHERE name=?", (new_quantity, data['name']))
-
-    else:
-        cursor.execute("INSERT INTO ingredients (name, quantity) VALUES (?, ?)", (data['name'], data['quantity'],))
-
-    conn.commit()
-    return jsonify({"message": "Ingredient added!"})
+    return add_ingredient_function(data)
 
 # View the fridge in list
 @fridge.route('/view', methods=['GET'])
 def view_fridge():
-    conn = get_db()
-    cursor = conn.cursor()
-    cursor.execute("SELECT * FROM ingredients")
-    items = cursor.fetchall()
-    return jsonify(items)
-
-# Add recipe and ingredients to the database
-@fridge.route('/add_recipe', methods=['POST'])
-def add_recipe():
-    data = request.json
-    conn = get_db()
-    cursor = conn.cursor()
-    cursor.execute("INSERT INTO recipes (name, ingredients) VALUES (?, ?)", (data['name'].lower(), data['ingredients'].lower(),))
-    conn.commit()
-    return jsonify({"message": "Recipe added!"})
+    return view_fridge_function()
 
 # View avaiable recipes based on available ingredients
 @fridge.route('/view_recipes', methods=['GET'])
@@ -94,7 +66,11 @@ def view_recipes():
     cursor.execute("SELECT * FROM ingredients")
     avaiable_ingredients = {item[0] for item in cursor.fetchall()}
 
-    # Find which recipes can be made with available ingredients
+    # fetch all recipes from the database
+    cursor.execute("SELECT * FROM recipes")
+    recipes = cursor.fetchall()
+    print(recipes)
+
     possible_recipes = []
 
     for recipe in recipes:
