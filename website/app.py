@@ -98,6 +98,7 @@ def view_recipes():
     # fetch all recipes from the database
     cursor.execute("SELECT * FROM recipes")
     recipes = cursor.fetchall()
+    print(recipes)
 
     possible_recipes = []
 

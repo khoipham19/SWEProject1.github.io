@@ -7,15 +7,16 @@
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/recipes.css') }}">
 </head>
 <body>
-    <h1>RECIPE PAGE</h1>
-    <h2>Available ingredients</h2>
-    <ul id="fridgeContents"></ul> <!-- Container for the fridge list -->
-
-    <h2>Recipes</h2>
-    <ul id="recipeList"></ul> <!-- Container for the recipe list -->
-
-    <!-- A form to take in a recipe and list of ingredients in a list separated by a comma -->
     <div class="wrapper">
+        <h1>RECIPES</h1>
+        <div class="recipes">
+            <h2>Available ingredients</h2>
+            <ul id="fridgeContents"></ul> <!-- Container for the fridge list -->
+
+            <h2>Recipes</h2>
+            <ul id="recipeList"></ul> <!-- Container for the recipe list -->
+        </div>  
+
         <form id="recipeForm" class="form">
             <h2>Add Recipe:</h2>
             <div class="input-box">
@@ -28,89 +29,93 @@
             </div>
             <button class="button" type="submit">Add</button>
         </form>
-    </div>
 
-    <script>
-        document.getElementById('recipeForm').addEventListener('submit', function(event) {
-            event.preventDefault();
-            const name = document.getElementById('addName').value;
-            const ingredients = document.getElementById('addIngredients').value;
+        <script>
+            function capitalizeFirstLetter(string) {
+                 return string.charAt(0).toUpperCase() + string.slice(1);
+            }
+            document.getElementById('recipeForm').addEventListener('submit', function(event) {
+                event.preventDefault();
+                const name = document.getElementById('addName').value;
+                const ingredients = document.getElementById('addIngredients').value;
 
-            fetch('/add_recipe', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    name: name,
-                    ingredients: ingredients,
-                }),
-            })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.json();
-            })
-            .then(data => {
-                console.log(data);
-                updateRecipes();
-            })
-            .catch(error => {
-                console.error('There has been a problem with your fetch operation:', error);
+                fetch('/add_recipe', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        name: name,
+                        ingredients: ingredients,
+                    }),
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log(data);
+                    updateRecipes();
+                })
+                .catch(error => {
+                    console.error('There has been a problem with your fetch operation:', error);
+                });
+            });
+
+            function updateFridge() {
+                fetch('/view')
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    const fridgeList = document.getElementById('fridgeContents');
+                    fridgeList.innerHTML = "";
+                    fridgeList.className = 'fridge-list';
+
+                    data.forEach(item => {
+                        const listItem = document.createElement('li');
+                        const newItem = item[0].split(" ").map(capitalizeFirstLetter);
+                        listItem.className = 'fridge-list-item';
+                        listItem.innerHTML = `${newItem[0]} <span style="color: lightblue;">${item[1]}`;
+                        fridgeList.appendChild(listItem);
+                    });
+                })
+                .catch(error => {
+                    console.error('There has been a problem with your fetch operation:', error);
+                });
+            }
+
+            document.addEventListener('DOMContentLoaded', (event) => {
+                updateFridge();
+            });
+
+            function updateRecipes() {
+                fetch('/view_recipes').then(response => response.json()).then(recipes => {
+                    const recipeList = document.getElementById('recipeList');
+                    recipeList.innerHTML = "";
+
+                    recipes.forEach(recipe => {
+                        const listItem = document.createElement('li');
+                        listItem.textContent = recipe;
+                        recipeList.appendChild(listItem);
             });
         });
-
-        function updateFridge() {
-            fetch('/view')
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.json();
-            })
-            .then(data => {
-                const fridgeList = document.getElementById('fridgeContents');
-                fridgeList.innerHTML = "";
-                fridgeList.className = 'fridge-list';
-
-                data.forEach(item => {
-                    const listItem = document.createElement('li');
-                    listItem.className = 'fridge-list-item';
-                    listItem.innerHTML = `${item[0]}: ${item[1]}`;
-                    fridgeList.appendChild(listItem);
-                });
-            })
-            .catch(error => {
-                console.error('There has been a problem with your fetch operation:', error);
-            });
         }
 
-        document.addEventListener('DOMContentLoaded', (event) => {
-            updateFridge();
+
+            document.addEventListener('DOMContentLoaded', (event) => {
+                updateRecipes(); 
         });
-
-        function updateRecipes() {
-            fetch('/view_recipes').then(response => response.json()).then(recipes => {
-                const recipeList = document.getElementById('recipeList');
-                recipeList.innerHTML = "";
-
-                recipes.forEach(recipe => {
-                    const listItem = document.createElement('li');
-                    listItem.textContent = recipe;
-                    recipeList.appendChild(listItem);
-        });
-    });
-}
-
-
-        document.addEventListener('DOMContentLoaded', (event) => {
-            updateRecipes(); 
-    });
-    </script>
+        </script>
+    </div>
 
     <div class="footer">
-        <a href="/" class="button" role="button">Logout</a>
-        <a href="/fridge" class="button" role="button">Back to fridge</a>
+        <a style="text-decoration: none;"href="/login" class="button" role="button">Logout</a>
+        <a style="text-decoration: none;"href="/fridge" class="button" role="button">Back to fridge</a>
 </body>
 </html>
