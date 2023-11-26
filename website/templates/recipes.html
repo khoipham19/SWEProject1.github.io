@@ -7,11 +7,9 @@
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/recipes.css') }}">
 </head>
 <body>
-    <div class="wrapper">
-        <h1>RECIPES</h1>
-        <div class="recipes">
-            <h2>Available ingredients</h2>
-            <ul id="fridgeContents"></ul> <!-- Container for the fridge list -->
+    <h1>RECIPE PAGE</h1>
+    <h2>Available ingredients</h2>
+    <ul id="fridgeContents"></ul> <!-- Container for the fridge list -->
 
     <h2>Recipes</h2>
     <ul id="recipeList"></ul> <!-- Container for the recipe list -->
@@ -30,22 +28,21 @@
                 fridgeList.innerHTML = "";
                 fridgeList.className = 'fridge-list';
 
-                    data.forEach(item => {
-                        const listItem = document.createElement('li');
-                        const newItem = item[0].split(" ").map(capitalizeFirstLetter);
-                        listItem.className = 'fridge-list-item';
-                        listItem.innerHTML = `${newItem[0]} <span style="color: lightblue;">${item[1]}`;
-                        fridgeList.appendChild(listItem);
-                    });
-                })
-                .catch(error => {
-                    console.error('There has been a problem with your fetch operation:', error);
+                data.forEach(item => {
+                    const listItem = document.createElement('li');
+                    listItem.className = 'fridge-list-item';
+                    listItem.innerHTML = `${item[0]}: ${item[1]}`;
+                    fridgeList.appendChild(listItem);
                 });
-            }
-
-            document.addEventListener('DOMContentLoaded', (event) => {
-                updateFridge();
+            })
+            .catch(error => {
+                console.error('There has been a problem with your fetch operation:', error);
             });
+        }
+
+        document.addEventListener('DOMContentLoaded', (event) => {
+            updateFridge();
+        });
 
         function updateRecipes() {
             fetch('/view_recipes')
@@ -79,7 +76,7 @@
     </script>
 
     <div class="footer">
-        <a style="text-decoration: none;"href="/login" class="button" role="button">Logout</a>
-        <a style="text-decoration: none;"href="/fridge" class="button" role="button">Back to fridge</a>
+        <a href="/" class="button" role="button">Logout</a>
+        <a href="/fridge" class="button" role="button">Back to fridge</a>
 </body>
 </html>

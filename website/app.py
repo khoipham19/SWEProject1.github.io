@@ -67,34 +67,32 @@ def add_ingredient():
 # View the fridge in list
 @fridge.route('/view', methods=['GET'])
 def view_fridge():
-    return view_fridge_function()
+    conn = get_db()
+    cursor = conn.cursor()
+    cursor.execute("SELECT * FROM ingredients")
+    items = cursor.fetchall()
+    return jsonify(items)
 
 # View avaiable recipes based on available ingredients
 @fridge.route('/view_recipes', methods=['GET'])
 def view_recipes():
-    # fetch ingredients and their tuple of ingredients from the database
+    # Recipes with their required ingredients
+    recipes_dict = {
+        "English Breakfast": ["Egg", "Bacon"],
+        # "Recipe2": ["ingredient3", "ingredient4"],
+        # Add more recipes as needed
+    }
+
+    # Fetch ingredients from the database
     conn = get_db()
     cursor = conn.cursor()
-
-    # fetch all ingredients from the database
-    cursor.execute("SELECT * FROM ingredients")
-    avaiable_ingredients = {item[0] for item in cursor.fetchall()}
+    cursor.execute("SELECT name FROM ingredients")
+    available_items = [item[0] for item in cursor.fetchall()]
 
     # Find which recipes can be made with available ingredients
     possible_recipes = []
-
-    for recipe in recipes:
-        recipe_name, recipe_ingredients = recipe
-        ingredients_list = set(ingredient.strip() for ingredient in recipe_ingredients.split(','))
-
-        if ingredients_list.issubset(avaiable_ingredients):
-            possible_recipes.append(recipe_name.capitalize())
+    for recipe, required_ingredients in recipes_dict.items():
+        if all(ingredient in available_items for ingredient in required_ingredients):
+            possible_recipes.append(recipe)
 
     return jsonify(possible_recipes)
-
-if __name__ == "__main__":
-    conn = sqlite3.connect(DATABASE)
-    cursor = conn.cursor()
-    cursor.execute("CREATE TABLE IF NOT EXISTS ingredients (name TEXT, quantity INTEGER)")
-    conn.commit()
-    app.run(debug=True)
