@@ -7,8 +7,13 @@
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/index.css') }}">
 </head>
 <body>
+    <div class="footer">
+        <a style="text-decoration: none;" href="/login" class="button" role="button">Logout</a>
+        <a style="text-decoration: none;" href="/recipes" class="button" role="button">Recipes</a>
+    </div>
+
     <div class="wrapper">
-        <h1>Virtual Fridge</h1>
+        <h1>Fridgio</h1>
         <form id="addForm" class ="form">
             <h2>Add Ingredient:</h2>
             <div class="input-box">
@@ -39,14 +44,13 @@
 
         <h3>Fridge Contents:</h3>
         <ul id="fridgeContents"></ul>
-
-        <div class="footer">
-            <a href="/login" class="button" role="button">Logout</a>
-            <a href="/recipes" class="button" role="button">Recipes</a>
-        </div>
         
-
         <script>
+            // Capitalize the first letter of each word in a string
+            function capitalizeFirstLetter(string) {
+                 return string.charAt(0).toUpperCase() + string.slice(1);
+            }
+            
             document.getElementById('addForm').addEventListener('submit', function(event) {
                 event.preventDefault();
                 const name = document.getElementById('addName').value.toLowerCase();
@@ -93,8 +97,9 @@
 
                 data.forEach(item => {
                     const listItem = document.createElement('li');
+                    const newItem = item[0].split(" ").map(capitalizeFirstLetter);
                     listItem.className = 'fridge-list-item'; // Apply the class to each list item
-                    listItem.innerHTML = `${item[0]}: ${item[1]}`;
+                    listItem.innerHTML = `${newItem[0]} <span style="color: lightblue;">${item[1]}`;
                     fridgeList.appendChild(listItem);
                 });
             });
