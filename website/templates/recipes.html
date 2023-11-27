@@ -34,6 +34,8 @@
             function capitalizeFirstLetter(string) {
                  return string.charAt(0).toUpperCase() + string.slice(1);
             }
+
+            // adds recipe to database
             document.getElementById('recipeForm').addEventListener('submit', function(event) {
                 event.preventDefault();
                 const name = document.getElementById('addName').value;
@@ -64,6 +66,7 @@
                 });
             });
 
+            // shows active ingredients in fridge
             function updateFridge() {
                 fetch('/view')
                 .then(response => {
@@ -100,8 +103,16 @@
                     recipeList.innerHTML = "";
 
                     recipes.forEach(recipe => {
+                        // Create list item for each recipe
                         const listItem = document.createElement('li');
-                        listItem.textContent = recipe;
+                        const recipeName = document.createTextNode(recipe.name + ': ');
+                        const ingredientsText = document.createTextNode(recipe.ingredients.join(', '));
+
+                        // Append the recipe name and ingredients to the list item
+                        listItem.appendChild(recipeName);
+                        listItem.appendChild(ingredientsText);
+
+                        // Append the list item to the recipe list
                         recipeList.appendChild(listItem);
             });
         });

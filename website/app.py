@@ -108,7 +108,7 @@ def view_recipes():
         ingredients_list = set(ingredient.strip() for ingredient in recipe_ingredients.split(','))
 
         if ingredients_list.issubset(avaiable_ingredients):
-            possible_recipes.append(recipe_name.capitalize())
+            possible_recipes.append({"name": recipe_name.capitalize(), "ingredients": list(ingredients_list)})
 
     return jsonify(possible_recipes)
 
